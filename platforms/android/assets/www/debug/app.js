@@ -3,6 +3,10 @@
 var Constants;
 var usuario='';
 var bandera=0;
+var eventosdisp='';
+var banderatabla=0;
+var cargardatos=0; 
+var showinfoevento=0;
 (function (Constants) {
     'use strict';
     
@@ -17,8 +21,9 @@ var bandera=0;
         Home: {
             Base: 'home',
             Scroll: 'scroll',
-            Table: 'eventos',
-            Password: 'recontra'
+            Table: 'evento_info',
+            Password: 'recontra',
+            Mapa: 'eventos_mapa'
         },
         Actions: {
             Base: 'actions'
@@ -138,7 +143,7 @@ var Home;
                 views: {
                     'home-tab': {
                         controller: 'homeController as vm',
-                        templateUrl: Paths.Modules + 'home/views/eventos.html'
+                        templateUrl: Paths.Modules + 'home/views/evento_info.html'
                     }
                 }
             
@@ -149,6 +154,16 @@ var Home;
                     'home-tab': {
                         controller: 'homeController as vm',
                         templateUrl: Paths.Modules + 'home/views/recontra.html'
+                    }
+                }
+            
+            })
+            .state(Paths.Tabs + '.' + Page.Mapa, {
+                url: '/' + Page.Mapa,
+                views: {
+                    'home-tab': {
+                        controller: 'homeController as vm',
+                        templateUrl: Paths.Modules + 'home/views/eventos_mapa.html'
                     }
                 }
             
@@ -223,11 +238,43 @@ var Home;
     var HomeController = (function () {
         
         function HomeController() {
+            this.datosEvento='';
+            this.dataE={
+                model: null,
+                availableOptions: []
+            };
+            this.showDiv=true;
+            
             if(bandera==1){
-                this.texto = '<h3>Bienvenido '+usuario.obj.nom_usu+'</h3>';            
-            }else{
-                this.texto = '<h3>Bienvenido</h3>';
+                this.texto = '<h3>Bienvenido '+usuario.obj.nom_usu+'</h3>';
+                
+                if(banderatabla==0){
+
+                    var url='http://env-9657173.dal.jelastic.vps-host.net/ingram-web/bpm/'+usuario.obj.id_usuario+'/eventoUsuario';
+                    $.post(url, { 
+                        data : {},
+                        contentType: "application/json",
+                        dataType: 'json'  
+                    }, function(data) {
+                        eventosdisp=data;
+                        
+                    });
+                    banderatabla=1;
+           
+                }
+                
             }
+            
+            
+            if(cargardatos==1){
+                var _this=this;
+                $(eventosdisp).each(function (index,item){
+                   _this.dataE.availableOptions.push({id:""+item.id_evento,name:item.nombre});
+                });                
+                cargardatos=0;
+            }
+            
+            
             //this.addTextAsync();
         }
         
@@ -237,8 +284,9 @@ var Home;
                 this.correo=correo;
                 this.password=password;
             }
-                              
-            var preregistroBO = new Preregistro("rnavarro@omicron.com.mx","BEIngram");
+            
+            //var preregistroBO = new Preregistro($('#correo1').val(),$('#contraseña').val());
+            var preregistroBO = new Preregistro("rodrigo.fernandez@sistemasaplicados.com.mx","Rolecher");
             $.ajax({
                 //url:'http://192.168.0.4:8080//ingram-web/preregistro/login',
  		url:'http://env-9657173.dal.jelastic.vps-host.net/ingram-web/preregistro/login',
@@ -248,17 +296,17 @@ var Home;
  		data: JSON.stringify(preregistroBO)
  		,success:function(data) {
                     usuario=data;
-                    $('#siguiente1').click();
-                    bandera=1;
+                    if(usuario.status==200){
+                        $('#siguiente1').click();
+                        bandera=1;
+                    }else{
+                        usuario='';
+                        alert('Error de logueo');
+                    }
                 },error: function(msg)  {
-                                        
+                    alert('Error');                    
  		}
             });
-            bandera=0;
-            $('#siguiente1').click();
-            
-            
-            
             
             
             //alert("Success!");
@@ -300,18 +348,26 @@ var Home;
             facebookConnectPlugin.login(["public_profile"],function (success) { alert("Conectado con exito") },function (error) { alert(JSON.stringify(error)) });
         };
         
-        HomeController.prototype.addComment = function () {
-            facebookConnectPlugin.showDialog({
-                        method: "share"                        
-                    }, function onShareSuccess (result) {
-                        alert("Comentario Exitoso");
-                    });
-        };*/
+        */
+        HomeController.prototype.Test = function () {
+            cargardatos=1;
+        };
         
-        HomeController.prototype.getNombreUsuario = function () {
-            alert('Entre func');
-            //this.texto = '<h3>Bienvenido </h3>';
-            this.texto='hola';
+        HomeController.prototype.infoEvento = function () {
+            var _this=this;
+            if($('#select_eventos').val()!=""){
+                
+                $(eventosdisp).each(function (index,item){
+                    if(""+item.id_evento==$('#select_eventos').val()){
+                
+                        _this.datosEvento='<h4>Nombre: '+item.nombre+'</h4><br><h4>Fecha Inicio: '+item.fechaInicioEvento+'</h4><br><h4>Fecha Termino: '+item.fechaTerminoEvento+'</h4>';
+                    }                    
+                });
+                this.showDiv=false;
+            }else{                
+                this.datosEvento='';
+                this.showDiv=true;
+            }
         };
         
         HomeController.prototype.recoverPassword = function () {
