@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<ion-view view-title="Información Evento">
+    <ion-nav-buttons side=right>
+		<button class="button button-clear button-calm icon icon-only ion-social-facebook" ng-click=vm.addApp()></button>
+	</ion-nav-buttons>
+	
+    <ion-content class=padding>
+        <div><img ng-src="img/logo-ingram-micro.png" class="center" alt="Ingram2"/></div>
+        <br>
+        <select id="select_eventos" class="form-control" ng-model="vm.dataE.model" ng-change=vm.infoEvento()>
+            <option value="">Selecciona un Evento</option>
+            <option ng-repeat="option in vm.dataE.availableOptions" value="{{option.id}}">{{option.name}}</option>
+        </select><br>
+        <article ng-bind-html=vm.datosEvento></article>
+        <br>
+        <button id= "continuarMapa" class="button button-block button-positive icon icon-right ion-chevron-right" ui-sref="tabs.eventos_mapa"  ng-show="!vm.showDiv">Ver Mapa</button>
+        
+    </ion-content>
+</ion-view>
