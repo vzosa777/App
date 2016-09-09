@@ -1,0 +1,33 @@
+﻿<ion-view view-title="Acceso">
+    
+    <ion-content>
+        <!--<div class="bar bar-header bar-light">
+            <img ng-src="img/logo.png" class="center" alt="Ingram"/>
+        </div>-->
+        <!--<div class="bar bar-header bar-stable">
+            <h1 class="title">bar-stable</h1>
+        </div>-->
+        <div><img ng-src="img/logo.png" class="center" alt="Ingram"/></div>
+        
+        <div class="list">
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Ingrese Correo Electrónico</span>
+                <input type="text" 
+                       placeholder="Ingrese Correo Electrónico" id="correo1">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Last Name</span>
+                <input type="text" 
+                       placeholder="Ingrese Contraseña" id="contraseña">
+            </label>
+        </div>
+
+        <div class="padding">
+            <a id="recover" class="button button-block button-positive icon icon-right ion-chevron-right" ui-sref="tabs.recontra">¿Has olvidado tu contraseña?</a>
+            <a id="siguiente1" class="button button-block button-positive icon icon-right ion-chevron-right" ui-sref="tabs.scroll">Ingresar</a>
+            <button id= "siguiente" class="button button-block button-positive icon icon-right ion-chevron-right" ng-click=vm.addLogin()>Ingresar</button>
+        </div>
+        
+        <!--<div><img ng-src="img/logo-ingram-micro.png" class="center" alt="Ingram2"/></div>-->
+    </ion-content>
+</ion-view>
