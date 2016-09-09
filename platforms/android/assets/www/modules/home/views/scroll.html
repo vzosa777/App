@@ -1,0 +1,16 @@
+<ion-view view-title=Bienvenido>
+    <ion-nav-buttons side=right>
+		<button class="button button-clear button-calm icon icon-only ion-social-facebook" ng-click=vm.addApp()></button>
+	</ion-nav-buttons>
+	
+    <ion-content class=padding>
+        <div><img ng-src="img/logo-ingram-micro.png" class="center" alt="Ingram2"/></div>
+        <br>
+        <br>
+        <br>
+        <div><img ng-src="img/logo.png" class="center" alt="Ingram"/></div>
+        <br>
+        <article ng-bind-html=vm.texto></article>
+        <button id= "continuarEventos" class="button button-block button-positive icon icon-right ion-plus-circled" ui-sref="tabs.eventos">Continuar</button>
+    </ion-content>
+</ion-view>

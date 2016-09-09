@@ -1,0 +1,22 @@
+<ion-view view-title=Bienvenido>
+    <ion-nav-buttons side=right>
+		
+	</ion-nav-buttons>
+	
+    <ion-content class=padding>
+        <div><img ng-src="img/logo-ingram-micro.png" class="center" alt="Ingram2"/></div>
+        <br>
+        <br>
+        <br>
+        <div>
+            <label class="item item-input item-floating-label">
+                <input type="text" 
+                       placeholder="Correo electronico" name="j_username" id="j_username" autofocus>
+            </label>              
+            <button id= "enviarCorreo" class="button button-block button-positive icon icon-right ion-chevron-right" ng-click=vm.recoverPassword()>Enviar correo</button>
+            <a id="atras1" class="button button-block button-positive icon icon-right ion-chevron-right" ui-sref="tabs.home">Ingresar</a>
+        </div>
+        <br>
+        
+    </ion-content>
+</ion-view>
